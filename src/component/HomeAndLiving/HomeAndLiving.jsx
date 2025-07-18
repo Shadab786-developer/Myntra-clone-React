@@ -7,8 +7,8 @@ import { Link } from "react-router-dom";
 function HomeAndLiving() {
   return (
     <>
-      <div className="flex justify-around items-center flex-col mr-[20%]  ml-[20%] sm:ml-[5%] sm:mr-[5%]">
-        <div className=" flex justify-center mt-[10%] max-w-full max-h-full">
+      <div className="flex justify-around items-center flex-col ">
+        <div className=" flex justify-center mt-[35%] sm:mt-[10%] max-w-full max-h-full">
           <img src="https://assets.myntassets.com/f_webp,w_980,c_limit,fl_progressive,dpr_2.0/assets/images/2025/JANUARY/18/9B2TYAc1_1e7474ea4f194ee4aaefdf8a11245b2e.jpg" />
         </div>
         <div className="h-full w-full m-3 mr-3">
@@ -18,7 +18,7 @@ function HomeAndLiving() {
             alt="This is the banner image"
           />
         </div>
-        <div className="text-gray-700 text-[25px] mt-12 mb-2 ml-8 max-h-10 font-extrabold  gap-3">
+        <div className="text-gray-700 text-[15px] sm:text-[35px] sm:m-16 text-left text-nowrap max-h-10 font-bold  gap-3">
           {" "}
           MEDAL WORTHY BRANDS TO BAG
         </div>
@@ -103,7 +103,7 @@ function HomeAndLiving() {
             </a>
           </Link>
         </div>
-        <div className="text-gray-700 text-[25px] mt-12 mb-2 ml-8 max-h-10 font-extrabold  gap-3">
+        <div className="text-gray-700 text-[15px] sm:text-[35px] sm:m-16 text-left text-nowrap max-h-10 font-bold  gap-3">
           FEATURED BRANDS
         </div>
         <div className="flex justify-center items-center gap-2">

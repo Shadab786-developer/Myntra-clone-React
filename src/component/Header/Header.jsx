@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import items from "../../details";
 import { useSelector } from "react-redux";
 import ReactDOM from "react-dom";
-import { useAuth0 } from "@auth0/auth0-react";
+import axios from "axios";
 
 // This file is a React component for the Header section of the Myntra clone.
 // It contains state variables for managing search input, results, and hover states.
@@ -14,14 +14,63 @@ export default function Header() {
   const [results, setResults] = useState([]);
   const [isActive, setIsActive] = useState(false);
 
+  const navigate = useNavigate();
+  // Authentication functions from Auth0
+  const userName = localStorage.getItem("userName");
+  const email = localStorage.getItem("email");
+  const password = localStorage.getItem("password");
   // State variables for managing items in the bag and wishlist
   const bagItem = useSelector((state) => state.bag.bagItems);
   const wihsItem = useSelector((state) => state.wish.wishItems);
 
-  // Authentication functions from Auth0
-  const { loginWithRedirect, logout, isAuthenticated } = useAuth0();
   const [showSide, setShowSide] = useState(false);
+  const [items, setItems] = useState([]);
+  const [error, setError] = useState(null); // error handling
 
+  const handleLogout = async () => {
+    const token = localStorage.getItem("accessToken");
+    console.log("Access Token:-", token);
+
+    try {
+      const response = await axios.post(
+        `https://myntra-backend-8j4c.onrender.com/api/v1/userAuth/logout`,
+        email,
+        password,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log("User Successfull logout", response.data);
+
+      localStorage.setItem("email", response.data.data.user.isVerified);
+    } catch (err) {
+      console.error("Error to Logout In user:", err.message);
+    }
+  };
+
+  // feaching the data from backend
+  const fetchProducts = async () => {
+    try {
+      const res = await fetch(
+        `https://myntra-backend-8j4c.onrender.com/api/v1/products/getProducts`
+      );
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const json = await res.json();
+      console.log(json);
+
+      setItems(json.message.products); // adjust based on your actual response structure
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
+    fetchProducts();
+  }, [results]);
+  const isAuthenticated = localStorage.getItem("isVerified");
   // Function to toggle the navigation sidebar
   const handleToggleNav = () => {
     setShowSide(!showSide);
@@ -90,7 +139,7 @@ export default function Header() {
 
           <div
             onMouseEnter={() => setIsHovered({ ...isHovered, men: true })}
-            onMouseLeave={() => setIsHovered({ ...isHovered, men: false })}
+            onMouseLeave={() => setIsHovered({ men: false })}
             className="relative mt-3 "
           >
             {" "}
@@ -103,7 +152,7 @@ export default function Header() {
             </NavLink>
             {isHovered.men && (
               <ProfileDropdown>
-                <div className="absolute bg-white w-4/5 top-20 left-12 flex items-center text-left justify-between">
+                <div className="absolute bg-white w-4/5 top-20 left-12 flex items-center text-left justify-between ">
                   <div className="flex bg-white justify-center items-center ml-[10%]">
                     <div className="flex flex-col m-[5%] items-start ">
                       <h2 className="text-pink-500 font-bold text-[16px] mb-2 ">
@@ -1692,7 +1741,7 @@ export default function Header() {
           </button>
         </div>
 
-        <div className="flex justify-center items-center ml-[20%] sm:ml-[10%] mr-[20%] sm:mr-[10%] h-10 text-gray-600 w-15 bg-gray-100 rounded-sm ">
+        <div className="flex justify-center items-center ml-[6%] sm:ml-[10%] mr-[20%] sm:mr-[10%] h-10 text-gray-600 w-15 bg-gray-100 rounded-sm ">
           <span className="material-symbols-outlined  text-gray-400 h-5 p-3 font-normal mb-5 ">
             search
           </span>
@@ -1701,7 +1750,7 @@ export default function Header() {
             value={input}
             type="text"
             placeholder="Search for product , brand and more "
-            className="h-10 min-w-80 max-w-96 w-1/3 px-[5%] flex-grow items-start py-2 bg-gray-100 rounded-sm focus:bg-white focus:text-black"
+            className="sm:h-10 h-5 sm:min-w-80 min-w-48 sm:max-w-96 max-w-40 sm:w-1/3 w-1/5 sm:px-[5%] flex-grow items-start py-2 bg-gray-100 rounded-sm focus:bg-white focus:text-black placeholder:text-[11px]"
             onChange={(e) => handleSearchItems(e.target.value)}
             onFocus={() => setIsActive(true)}
             onBlur={() => setIsActive(false)}
@@ -1721,7 +1770,7 @@ export default function Header() {
           <div
             className="flex flex-col items-center relative hover:border-b-4 hover:border-b-pink-600"
             onMouseEnter={() => setIsHovered({ ...isHovered, profile: true })}
-            onMouseLeave={() => setIsHovered({ ...isHovered, profile: false })}
+            onClick={() => setIsHovered({ ...isHovered, profile: false })}
           >
             <span className="material-symbols-outlined text-gray-400 ">
               person
@@ -1734,32 +1783,33 @@ export default function Header() {
                   <div className="p-2">
                     <div className="flex flex-col">
                       <h1 className="text-gray-700 font-bold text-[20px]">
-                        Welcome{" "}
+                        Welcome {userName}
                       </h1>
-                      <h4 className="text-gray-600 text-[16px] text-nowrap">
-                        To access account and manage orders
-                      </h4>
+                      {email ? (
+                        <h4 className="text-gray-600 text-[16px] text-nowrap">
+                          {email}
+                        </h4>
+                      ) : (
+                        <h4 className="text-gray-600 text-[16px] text-nowrap">
+                          To access account and manage orders
+                        </h4>
+                      )}
                       {isAuthenticated ? (
                         <button
                           className="border border-gray-200 text-pink-600 font-bold text-[20px] rounded-sm py-3 px-4 mr-10 mt-3 mb-3 hover:border-pink-600"
-                          onClick={() =>
-                            logout({
-                              logoutParams: {
-                                returnTo: window.location.origin,
-                              },
-                            })
-                          }
+                          onClick={() => handleLogout()}
                         >
                           LOGOUT
                         </button>
                       ) : (
                         <button
                           className="border border-gray-200 text-pink-600 font-bold text-[20px] rounded-sm py-3 px-4 mr-10 mt-3 mb-3 hover:border-pink-600"
-                          onClick={() => loginWithRedirect()}
+                          onClick={() => navigate("/Singin")}
                         >
-                          LOGIN / SIGNUP
+                          LOGIN / SINGIN
                         </button>
                       )}
+
                       <hr />
                       <div className="flex justify-center items-start flex-col m-5 border-b-2 border-gray-200">
                         <a

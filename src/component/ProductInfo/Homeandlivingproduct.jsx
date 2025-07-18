@@ -1,65 +1,243 @@
 import React, { useEffect, useState } from "react";
-import items from "../../details";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addToWish } from "../../Features/WishItems/WishSlice";
+import { useNavigate } from "react-router-dom";
+
+const PAGE_LIMIT = 5;
+const ITEM_TYPE = "home&living";
+const token = localStorage.getItem("accessToken");
+// Component to display kids products
 
 // Component to display home and living products
 function HomeAnsLivingproduct() {
-  const [showItems, setShowItems] = useState(true); // State to control visibility of items
-  const dispatch = useDispatch(); // Hook to dispatch actions
+  const navigate = useNavigate();
+  // State variable for managing the display of items
+  const [currentPage, setCurrentPage] = useState(1); // e.g., access 3rd page
+  const [totalProductsPages, setTotalProductsPages] = useState(1);
 
-  // Function to render a single product item
-  const renderComponent = (item, index) => (
+  const [totalProducts, setTotaProducts] = useState(0);
+  const [items, setItems] = useState([]); // state for fetched items
+  const [loading, setLoading] = useState(true); // loading state
+  const [error, setError] = useState(null); // error handling
+
+  const dispatch = useDispatch();
+  // State variable for wishlist items
+  const wishItem = useSelector((state) => state.wish.wishItems);
+
+  // feaching the data from backend
+  const fetchProducts = async () => {
+    try {
+      const res = await fetch(
+        `https://myntra-backend-8j4c.onrender.com/api/v1/products/getProducts?page=${currentPage}&limit=${PAGE_LIMIT}`
+      );
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const json = await res.json();
+      console.log(json);
+
+      setItems(json.message.products); // adjust based on your actual response structure
+      filterByCategory();
+
+      console.log(totalProducts);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+  async function filterByCategory() {
+    const resp = await fetch(
+      `http://localhost:7000/api/v1/filter/filterByCategory?page=${currentPage}&limit=${PAGE_LIMIT}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ categories: [ITEM_TYPE] }),
+      }
+    );
+    if (!resp.ok) throw new Error(await resp.text());
+    const data = await resp.json();
+    console.log("filterByCategory", data.message);
+    setItems(data.message.products);
+    setTotalProductsPages(data.message.totalPages || 1);
+    console.log(totalProductsPages);
+
+    setTotaProducts(
+      data.totalProducts ||
+        (data.message.products ? data.message.products.length : 0)
+    );
+
+    return data.message; // array of clients
+  }
+  useEffect(() => {
+    fetchProducts();
+    console.log("Items men :", items);
+  }, [currentPage]);
+
+  //Filter section
+  const [filters, setFilters] = useState({
+    current_price: "",
+    companyNames: "",
+    discount_percentage: "",
+    colors: "",
+  });
+  const handleFilterInputChange = (field, value) => {
+    setFilters((prev) => ({ ...prev, [field]: value }));
+  };
+  const clearFilters = () => {
+    setFilters({
+      current_price: "",
+      companyNames: "",
+      discount_percentage: "",
+      colors: "",
+    });
+    fetchProducts();
+  };
+  const addFilters = async () => {
+    setLoading(true);
+
+    // Apply filters one by one (since each API filters by one field)
+    for (const [field, value] of Object.entries(filters)) {
+      if (value) {
+        let url = "company_name";
+        let body = {};
+        switch (field) {
+          case "current_price":
+            url =
+              "https://myntra-backend-8j4c.onrender.com/api/v1/filter/filterByCurrentPrice";
+            body = { minPrice: value, maxPrice: value };
+            break;
+          case "company_name":
+            url =
+              "https://myntra-backend-8j4c.onrender.com/api/v1/filter/filterByCompanyName";
+            body = { companyNames: [value] };
+            break;
+          case "discount_percentage":
+            url =
+              "https://myntra-backend-8j4c.onrender.com/api/v1/filter/filterByDiscount";
+            body = { minDiscount: value, maxDiscount: value };
+            break;
+          case "colors":
+            url =
+              "https://myntra-backend-8j4c.onrender.com/api/v1/filter/filterByColor";
+            body = { colors: [value] };
+            break;
+
+          default:
+            continue;
+        }
+        try {
+          if (!token) {
+            alert("No token found. Please log in.");
+            setLoading(false);
+            return;
+          }
+          const res = await fetch(url, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(body),
+          });
+          if (res.status === 401) {
+            alert("Unauthorized. Please log in again.");
+            setLoading(false);
+            return;
+          }
+          const data = await res.json();
+          // Intersect results if multiple filters, else just assign
+          console.log(data);
+          const product = data.message.map((item) => {
+            if ((item.item_type === ITEM_TYPE) === true) {
+              return item;
+            }
+          });
+          console.log("Women Filter Product", product);
+          const man = product.filter((item) => item !== undefined);
+          if (man) {
+            setItems(man);
+          } else {
+            alert("No such products in mens category");
+          }
+        } catch (err) {
+          alert("Failed to filter Product", err.message);
+          setLoading(false);
+          return;
+        }
+      }
+    }
+
+    console.log(items);
+
+    setLoading(false);
+  };
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) setCurrentPage(currentPage - 1);
+  };
+  const handleNextPage = () => {
+    if (currentPage < totalProductsPages) setCurrentPage(currentPage + 1);
+  };
+  if (loading) return <div>🔄 Loading products...</div>;
+  if (error) return <div>⚠️ Error: {error}</div>;
+
+  const handleProductClick = (item) => {
+    navigate(`/details/${item._id}`, {
+      state: { item },
+    });
+  };
+  // Function to render a single item component
+  const renderComponent = () => (
     <>
-      <div className="w-64 m-4 " key={index}>
-        <img className="w-full" src={item.item_image} alt="Item image" />
-        <div className="text-[12px] font-bold">
-          {item.rating.stars} ⭐ | {item.rating.noOfReviews}
-        </div>
-        <div className="mt-4 text-[16px] font-bold text-[#282c3f] mb-2 whitespace-nowrap">
-          {item.company_name}
-        </div>
-        <div className="text-[#535766] text-[14px] mb-0 mt-0 whitespace-nowrap font-normal block">
-          {item.item_name}
-        </div>
-        <div className="mt-3 text-[14p] whitespace-nowrap text-[#282c3f]">
-          <span className="text-[14px] text-[#282c3f] font-bold">
-            Rs.{item.current_price}
-          </span>
-          <span className="text-[#7e818c] text-[12px] font-normal ml-1">
-            Rs.{item.original_price}
-          </span>
-          <span className="text-[#ff905a] text-[12px] font-normal ml-1">
-            ({item.discount_precentage}% OFF)
-          </span>
-        </div>
+      <div className="flex flex-wrap gap-x-20 max-w-full items-center justify-center">
+        {items.map((item, index) => {
+          return (
+            <div
+              className="w-64 m-4 "
+              key={index}
+              onClick={() => handleProductClick(item)}
+            >
+              <img className="w-full" src={item.item_image} alt="Item image" />
+              <div className="text-[12px] font-bold">
+                {item.rating.stars} ⭐ | {item.rating.noOfReviews}
+              </div>
+              <div className="mt-4 text-[16px] font-bold text-[#282c3f] mb-2 whitespace-nowrap">
+                {item.company_name}
+              </div>
+              <div className="text-[#535766] text-[14px] mb-0 mt-0 whitespace-nowrap font-normal block">
+                {item.item_name}
+              </div>
+              <div className="mt-3 text-[14p] whitespace-nowrap text-[#282c3f]">
+                <span className="text-[14px] text-[#282c3f] font-bold">
+                  {" "}
+                  Rs.{item.current_price}
+                </span>
+                <span className="text-[#7e818c] text-[12px] font-normal ml-1">
+                  Rs.{item.original_price}
+                </span>
+                <span className="text-[#ff905a] text-[12px] font-normal ml-1">
+                  {" "}
+                  ({item.discount_percentage}% OFF)
+                </span>
+              </div>
 
-        <button
-          className="bg-white border border-black text-black py-1 px-4 rounded-lg w-full text-[18px] mt-2 cursor-pointer"
-          onClick={() => {
-            dispatch(addToWish(item)); // Dispatch action to add item to wish list
-          }}
-        >
-          ❤ Wishlist
-        </button>
+              <button
+                className="bg-white border border-black text-black py-1 px-4 rounded-lg w-full text-[18px] mt-2 cursor-pointer"
+                onClick={() => {
+                  dispatch(addToWish(item));
+                  console.log(wishItem);
+                }}
+              >
+                ❤ Wishlist
+              </button>
+            </div>
+          );
+        })}
       </div>
     </>
   );
-
-  // Filter items to only include home and living products
-  const filterHomeAndLivingItem = items.filter(
-    (item) => item.item_type === "home&living"
-  );
-
-  // Function to handle showing items
-  const handleShowItems = () => {
-    setShowItems(items);
-  };
-
-  // Effect to handle showing items on component mount
-  useEffect(() => {
-    handleShowItems;
-  }, []);
 
   return (
     <>
@@ -181,6 +359,10 @@ function HomeAnsLivingproduct() {
                   <label className="ml-6">
                     <input
                       type="checkbox"
+                      value={"safiya Carpet"}
+                      onChange={(e) => {
+                        handleFilterInputChange("company_name", e.target.value);
+                      }}
                       className="w-3 h-3 accent-pink-500 cursor-pointer hover:ring-2 hover:ring-pink-300 mr-3"
                     />
                     Safiya Carpet
@@ -188,6 +370,10 @@ function HomeAnsLivingproduct() {
                   <label className="ml-6">
                     <input
                       type="checkbox"
+                      value={"Kuber Industries"}
+                      onChange={(e) => {
+                        handleFilterInputChange("company_name", e.target.value);
+                      }}
                       className="w-3 h-3 accent-pink-500 cursor-pointer hover:ring-2 hover:ring-pink-300 mr-3"
                     />
                     Kuber Industries
@@ -195,6 +381,10 @@ function HomeAnsLivingproduct() {
                   <label className="ml-6">
                     <input
                       type="checkbox"
+                      value={"BFAM"}
+                      onChange={(e) => {
+                        handleFilterInputChange("company_name", e.target.value);
+                      }}
                       className="w-3 h-3 accent-pink-500 cursor-pointer hover:ring-2 hover:ring-pink-300 mr-3"
                     />
                     BFAM
@@ -202,6 +392,10 @@ function HomeAnsLivingproduct() {
                   <label className="ml-6">
                     <input
                       type="checkbox"
+                      value={"Cortina"}
+                      onChange={(e) => {
+                        handleFilterInputChange("company_name", e.target.value);
+                      }}
                       className="w-3 h-3 accent-pink-500 cursor-pointer hover:ring-2 hover:ring-pink-300 mr-3"
                     />
                     Cortina
@@ -209,6 +403,10 @@ function HomeAnsLivingproduct() {
                   <label className="ml-6">
                     <input
                       type="checkbox"
+                      value={"BED-SHEET.COM"}
+                      onChange={(e) => {
+                        handleFilterInputChange("company_name", e.target.value);
+                      }}
                       className="w-3 h-3 accent-pink-500 cursor-pointer hover:ring-2 hover:ring-pink-300 mr-3"
                     />
                     BED-SHEET.COM
@@ -216,6 +414,10 @@ function HomeAnsLivingproduct() {
                   <label className="ml-6">
                     <input
                       type="checkbox"
+                      value={"BILBERRY Furnishing by preeti grover"}
+                      onChange={(e) => {
+                        handleFilterInputChange("company_name", e.target.value);
+                      }}
                       className="w-3 h-3 accent-pink-500 cursor-pointer hover:ring-2 hover:ring-pink-300 mr-3"
                     />
                     BILBERRY Furnishing by preeti grover
@@ -223,6 +425,10 @@ function HomeAnsLivingproduct() {
                   <label className="ml-6">
                     <input
                       type="checkbox"
+                      value={"A Vintage Affair-home Decor"}
+                      onChange={(e) => {
+                        handleFilterInputChange("company_name", e.target.value);
+                      }}
                       className="w-3 h-3 accent-pink-500 cursor-pointer hover:ring-2 hover:ring-pink-300 mr-3"
                     />
                     A Vintage Affair- Home Decor
@@ -230,6 +436,10 @@ function HomeAnsLivingproduct() {
                   <label className="ml-6">
                     <input
                       type="checkbox"
+                      value={"ROSARA HOME"}
+                      onChange={(e) => {
+                        handleFilterInputChange("company_name", e.target.value);
+                      }}
                       className="w-3 h-3 accent-pink-500 cursor-pointer hover:ring-2 hover:ring-pink-300 mr-3"
                     />
                     ROSARA HOME
@@ -237,6 +447,10 @@ function HomeAnsLivingproduct() {
                   <label className="ml-6">
                     <input
                       type="checkbox"
+                      value={"Story@home"}
+                      onChange={(e) => {
+                        handleFilterInputChange("company_name", e.target.value);
+                      }}
                       className="w-3 h-3 accent-pink-500 cursor-pointer hover:ring-2 hover:ring-pink-300 mr-3"
                     />
                     Story@home
@@ -244,6 +458,10 @@ function HomeAnsLivingproduct() {
                   <label className="ml-6">
                     <input
                       type="checkbox"
+                      value={"Saral home"}
+                      onChange={(e) => {
+                        handleFilterInputChange("company_name", e.target.value);
+                      }}
                       className="w-3 h-3 accent-pink-500 cursor-pointer hover:ring-2 hover:ring-pink-300 mr-3"
                     />
                     Saral Home
@@ -251,6 +469,10 @@ function HomeAnsLivingproduct() {
                   <label className="ml-6">
                     <input
                       type="checkbox"
+                      value={"Aura"}
+                      onChange={(e) => {
+                        handleFilterInputChange("company_name", e.target.value);
+                      }}
                       className="w-3 h-3 accent-pink-500 cursor-pointer hover:ring-2 hover:ring-pink-300 mr-3"
                     />
                     Aura
@@ -258,6 +480,10 @@ function HomeAnsLivingproduct() {
                   <label className="ml-6">
                     <input
                       type="checkbox"
+                      value={"Featherlite"}
+                      onChange={(e) => {
+                        handleFilterInputChange("company_name", e.target.value);
+                      }}
                       className="w-3 h-3 accent-pink-500 cursor-pointer hover:ring-2 hover:ring-pink-300 mr-3"
                     />
                     Featherlite
@@ -287,6 +513,9 @@ function HomeAnsLivingproduct() {
     sm:mb-[5%]"
                     min={0}
                     max={100000000}
+                    onChange={(e) => {
+                      handleFilterInputChange("current_price", e.target.value);
+                    }}
                   />
                   <span className="text-[12px] font-extrabold">
                     $0 - $10,000+
@@ -299,6 +528,10 @@ function HomeAnsLivingproduct() {
                   <label className="ml-6">
                     <input
                       type="checkbox"
+                      value={"white"}
+                      onChange={(e) => {
+                        handleFilterInputChange("colors", e.target.value);
+                      }}
                       className="w-3 h-3 accent-pink-500 cursor-pointer hover:ring-2 hover:ring-pink-300 mr-2"
                     />
                     <span className="border border-[black] text-white rounded-full h-2 w-3 bg-white">
@@ -309,6 +542,10 @@ function HomeAnsLivingproduct() {
                   <label className="ml-6">
                     <input
                       type="checkbox"
+                      value={"black"}
+                      onChange={(e) => {
+                        handleFilterInputChange("colors", e.target.value);
+                      }}
                       className="w-3 h-3 accent-pink-500 cursor-pointer hover:ring-2 hover:ring-pink-300 mr-2"
                     />
                     <span className="border border-[black] rounded-full h-3 w-3 bg-black text-black ">
@@ -319,6 +556,10 @@ function HomeAnsLivingproduct() {
                   <label className="ml-6">
                     <input
                       type="checkbox"
+                      value={"brown"}
+                      onChange={(e) => {
+                        handleFilterInputChange("colors", e.target.value);
+                      }}
                       className="w-3 h-3 accent-pink-500 cursor-pointer hover:ring-2 hover:ring-pink-300 mr-2"
                     />
                     <span className="border border-[black] rounded-full h-3 w-3 bg-red-950 text-red-950">
@@ -329,6 +570,10 @@ function HomeAnsLivingproduct() {
                   <label className="ml-6">
                     <input
                       type="checkbox"
+                      value={"pink"}
+                      onChange={(e) => {
+                        handleFilterInputChange("colors", e.target.value);
+                      }}
                       className="w-3 h-3 accent-pink-500 cursor-pointer hover:ring-2 hover:ring-pink-300 mr-2"
                     />
                     <span className="border border-[black] rounded-full h-3 w-3 bg-pink-600 text-pink-600">
@@ -339,6 +584,10 @@ function HomeAnsLivingproduct() {
                   <label className="ml-6">
                     <input
                       type="checkbox"
+                      value={"green"}
+                      onChange={(e) => {
+                        handleFilterInputChange("colors", e.target.value);
+                      }}
                       className="w-3 h-3 accent-pink-500 cursor-pointer hover:ring-2 hover:ring-pink-300 mr-2"
                     />
                     <span className="border border-[black] rounded-full h-3 w-3 bg-green-700 text-green-700 ">
@@ -349,6 +598,10 @@ function HomeAnsLivingproduct() {
                   <label className="ml-6">
                     <input
                       type="checkbox"
+                      value={"yellow"}
+                      onChange={(e) => {
+                        handleFilterInputChange("colors", e.target.value);
+                      }}
                       className="w-3 h-3 accent-pink-500 cursor-pointer hover:ring-2 hover:ring-pink-300 mr-2"
                     />
                     <span className="border border-[black] rounded-full h-3 w-3 bg-yellow-400 text-yellow-400">
@@ -359,6 +612,10 @@ function HomeAnsLivingproduct() {
                   <label className="ml-6">
                     <input
                       type="checkbox"
+                      value={"blue"}
+                      onChange={(e) => {
+                        handleFilterInputChange("colors", e.target.value);
+                      }}
                       className="w-3 h-3 accent-pink-500 cursor-pointer hover:ring-2 hover:ring-pink-300 mr-2"
                     />
                     <span className="border border-[black] rounded-full h-3 w-3 bg-blue-700 text-blue-700 ">
@@ -369,6 +626,10 @@ function HomeAnsLivingproduct() {
                   <label className="ml-6">
                     <input
                       type="checkbox"
+                      value={"orange"}
+                      onChange={(e) => {
+                        handleFilterInputChange("colors", e.target.value);
+                      }}
                       className="w-3 h-3 accent-pink-500 cursor-pointer hover:ring-2 hover:ring-pink-300 mr-2"
                     />
                     <span className="border border-[black] rounded-full h-3 w-3 bg-orange-600 text-orange-600">
@@ -379,6 +640,10 @@ function HomeAnsLivingproduct() {
                   <label className="ml-6">
                     <input
                       type="checkbox"
+                      value={"emerald"}
+                      onChange={(e) => {
+                        handleFilterInputChange("colors", e.target.value);
+                      }}
                       className="w-3 h-3 accent-pink-500 cursor-pointer hover:ring-2 hover:ring-pink-300 mr-2"
                     />
                     <span className="border border-[black] rounded-full h-3 w-3 bg-emerald-700 text-emerald-700">
@@ -389,12 +654,16 @@ function HomeAnsLivingproduct() {
                   <label className="ml-6">
                     <input
                       type="checkbox"
+                      value={"purple"}
+                      onChange={(e) => {
+                        handleFilterInputChange("colors", e.target.value);
+                      }}
                       className="w-3 h-3 accent-pink-500 cursor-pointer hover:ring-2 hover:ring-pink-300 mr-2"
                     />
                     <span className="border border-[black] rounded-full h-3 w-3 bg-purple-700 text-purple-700">
                       oo
                     </span>
-                    Pink
+                    Purple
                   </label>
                 </li>
                 <h2 className="text-[#282c3f] font-bold text-[30px] sm:text-[20px] mb-2 ml-3">
@@ -404,6 +673,13 @@ function HomeAnsLivingproduct() {
                   <label className="ml-6">
                     <input
                       type="checkbox"
+                      value={10}
+                      onChange={(e) => {
+                        handleFilterInputChange(
+                          "discount_percentage",
+                          e.target.value
+                        );
+                      }}
                       className=" w-3 h-3 accent-pink-500 cursor-pointer hover:ring-2 hover:ring-pink-300 mr-3"
                     />
                     10% and above
@@ -411,6 +687,13 @@ function HomeAnsLivingproduct() {
                   <label className="ml-6">
                     <input
                       type="checkbox"
+                      value={20}
+                      onChange={(e) => {
+                        handleFilterInputChange(
+                          "discount_percentage",
+                          e.target.value
+                        );
+                      }}
                       className=" w-3 h-3 accent-pink-500 cursor-pointer hover:ring-2 hover:ring-pink-300 mr-3"
                     />
                     20% and above
@@ -418,6 +701,13 @@ function HomeAnsLivingproduct() {
                   <label className=" ml-6">
                     <input
                       type="checkbox"
+                      value={30}
+                      onChange={(e) => {
+                        handleFilterInputChange(
+                          "discount_percentage",
+                          e.target.value
+                        );
+                      }}
                       className="mr-3 w-3 h-3 accent-pink-500 cursor-pointer hover:ring-2 hover:ring-pink-300"
                     />
                     30% and above
@@ -425,6 +715,13 @@ function HomeAnsLivingproduct() {
                   <label className="ml-6">
                     <input
                       type="checkbox"
+                      value={40}
+                      onChange={(e) => {
+                        handleFilterInputChange(
+                          "discount_percentage",
+                          e.target.value
+                        );
+                      }}
                       className="mr-3 w-3 h-3 accent-pink-500 cursor-pointer hover:ring-2 hover:ring-pink-300"
                     />
                     40% and above
@@ -432,6 +729,13 @@ function HomeAnsLivingproduct() {
                   <label className="ml-6">
                     <input
                       type="checkbox"
+                      value={50}
+                      onChange={(e) => {
+                        handleFilterInputChange(
+                          "discount_percentage",
+                          e.target.value
+                        );
+                      }}
                       className="mr-3 w-3 h-3 accent-pink-500 cursor-pointer hover:ring-2 hover:ring-pink-300"
                     />
                     50% and above
@@ -439,6 +743,13 @@ function HomeAnsLivingproduct() {
                   <label className="ml-6">
                     <input
                       type="checkbox"
+                      value={60}
+                      onChange={(e) => {
+                        handleFilterInputChange(
+                          "discount_percentage",
+                          e.target.value
+                        );
+                      }}
                       className="mr-3 w-3 h-3 accent-pink-500 cursor-pointer hover:ring-2 hover:ring-pink-300"
                     />
                     60% and above
@@ -446,6 +757,13 @@ function HomeAnsLivingproduct() {
                   <label className="ml-6">
                     <input
                       type="checkbox"
+                      value={70}
+                      onChange={(e) => {
+                        handleFilterInputChange(
+                          "discount_percentage",
+                          e.target.value
+                        );
+                      }}
                       className="mr-3 w-3 h-3 accent-pink-500 cursor-pointer hover:ring-2 hover:ring-pink-300"
                     />
                     70% and above
@@ -453,6 +771,13 @@ function HomeAnsLivingproduct() {
                   <label className="ml-6">
                     <input
                       type="checkbox"
+                      value={80}
+                      onChange={(e) => {
+                        handleFilterInputChange(
+                          "discount_percentage",
+                          e.target.value
+                        );
+                      }}
                       className="mr-3 w-3 h-3 accent-pink-500 cursor-pointer hover:ring-2 hover:ring-pink-300"
                     />
                     80% and above
@@ -460,6 +785,13 @@ function HomeAnsLivingproduct() {
                   <label className="ml-6">
                     <input
                       type="checkbox"
+                      value={90}
+                      onChange={(e) => {
+                        handleFilterInputChange(
+                          "discount_percentage",
+                          e.target.value
+                        );
+                      }}
                       className="mr-3 w-3 h-3 accent-pink-500 cursor-pointer hover:ring-2 hover:ring-pink-300"
                     />
                     90% and above
@@ -467,6 +799,13 @@ function HomeAnsLivingproduct() {
                   <label className="ml-6">
                     <input
                       type="checkbox"
+                      value={100}
+                      onChange={(e) => {
+                        handleFilterInputChange(
+                          "discount_percentage",
+                          e.target.value
+                        );
+                      }}
                       className="mr-3 w-3 h-3 accent-pink-500 cursor-pointer hover:ring-2 hover:ring-pink-300"
                     />
                     100% and above
@@ -485,13 +824,88 @@ function HomeAnsLivingproduct() {
                 <option>Price: Low to High</option>
                 <option>Price: High to Low</option>
               </select>
+              <button
+                className="p-3 rounded-full bg-blue-50 hover:bg-blue-100 transition"
+                onClick={addFilters}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="30"
+                  height="30"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                  className="text-blue-600"
+                >
+                  <path d="M3 5a1 1 0 0 1 1-1h16a1 1 0 0 1 .8 1.6l-6.6 8.8V19a1 1 0 0 1-1.45.89l-2-1A1 1 0 0 1 10 18v-4.6L3.2 6.6A1 1 0 0 1 3 5z" />
+                </svg>
+              </button>
+              <button
+                className="p-3 rounded-full bg-red-50 hover:bg-red-100 transition"
+                onClick={clearFilters}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="30"
+                  height="30"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                  className="text-red-600"
+                >
+                  <circle
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  />
+                  <path
+                    d="M15 9l-6 6M9 9l6 6"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              </button>
             </div>
 
-            <div className="w-3/5 sm:w-4/5 m-[40px 10%] sm:m-[40px 10%] flex justify-between items-center flex-wrap">
-              {showItems &&
-                filterHomeAndLivingItem.map((item, index) =>
-                  renderComponent(item, index)
-                )}
+            <div className="w-full flex flex-col items-center max-h-28">
+              {renderComponent()}
+              {totalProductsPages > 0 && (
+                <div className="flex justify-center items-center gap-6 py-6">
+                  <button
+                    onClick={handlePrevPage}
+                    disabled={currentPage === 1}
+                    className={`px-4 py-2 rounded-lg font-medium transition-colors duration-300 ${
+                      currentPage === 1
+                        ? "bg-gray-300 text-gray-600 cursor-not-allowed"
+                        : "bg-blue-500 text-white hover:bg-blue-600"
+                    }`}
+                  >
+                    ← Prev
+                  </button>
+
+                  <span className="text-sm md:text-base font-semibold text-gray-700">
+                    Page <span className="text-blue-600">{currentPage}</span> of{" "}
+                    <span className="text-blue-600">{totalProductsPages}</span>
+                    <span className="ml-4 text-gray-600">
+                      Total: <strong>{totalProducts}</strong> Items
+                    </span>
+                  </span>
+
+                  <button
+                    onClick={handleNextPage}
+                    disabled={currentPage === totalProductsPages}
+                    className={`px-4 py-2 rounded-lg font-medium transition-colors duration-300 ${
+                      currentPage === totalProductsPages
+                        ? "bg-gray-300 text-gray-600 cursor-not-allowed"
+                        : "bg-blue-500 text-white hover:bg-blue-600"
+                    }`}
+                  >
+                    Next →
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </main>

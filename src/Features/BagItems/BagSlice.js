@@ -22,7 +22,7 @@ export const BagSlice = createSlice({
   reducers: {
     addToBag(state, action) {
       const existingItem = state.bagItems.find(
-        (item) => item.id === action.payload.id
+        (item) => item._id === action.payload._id
       );
 
       if (existingItem) {
@@ -34,13 +34,13 @@ export const BagSlice = createSlice({
     },
     removeFromBag(state, action) {
       state.bagItems = state.bagItems.filter(
-        (item) => item.id !== action.payload
+        (item) => item._id !== action.payload
       );
       localStorage.setItem("bagItems", JSON.stringify(state.bagItems));
     },
     updateQuantity: (state, action) => {
-      const { id, quantity } = action.payload;
-      const item = state.bagItems.find((item) => item.id === id);
+      const { _id, quantity } = action.payload;
+      const item = state.bagItems.find((item) => item._id === _id);
       if (item) {
         item.quantity = quantity;
         localStorage.setItem("bagItems", JSON.stringify(state.bagItems));

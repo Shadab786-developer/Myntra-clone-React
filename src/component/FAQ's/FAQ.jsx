@@ -47,9 +47,7 @@ const FAQ = () => {
 
 Here are a couple of baits fraudsters often use to cheat consumers:
 
-
 Congratulations! You have been nominated as a ‘Top Myntra customer’ and are now eligible for a luxury gift item. Please share your proof of address and your debit/credit card details to avail this great offer.
-
 
 Hi, I’m calling from Myntra. We are happy to let you know that you have won an exclusive lucky draw coupon of Rs. 5000 on your latest purchase. Please share your credit/debit card number so we can credit the money directly into your bank account.`,
         },
@@ -73,7 +71,6 @@ Hi, I’m calling from Myntra. We are happy to let you know that you have won an
           question: "How do I create a Return Request?",
           answer: `You can create a Return in three simple steps
 
-
 Tap on MyOrders
 Choose the item to be Returned
 Enter details requested and create a return request`,
@@ -90,7 +87,6 @@ Enter details requested and create a return request`,
             "I have created a Return request. When will I get the refund?",
           answer: `Refund will be initiated upon successful pickup as per the Returns Policy. The refund amount is expected to reflect in the customer account within the following timelines:
 
-
 NEFT - 1 to 3 business days post refund initiation
 Myntra Credit - Instant
 Online Refund – 7 to 10 days post refund initiation, depending on your bank partner
@@ -103,28 +99,23 @@ Note: You can maintain up to five bank accounts for NEFT/IMPS refunds and a sing
           question: "Where should I self-ship the Returns?",
           answer: `You can send the return to any one of the following returns processing facilities listed below. Please ensure that you specify the name of the seller you purchased the products from (You can find the seller name on your order invoice) and dispatch the package to the address listed below. Kindly do not send it to any other address as the return package would not be treated as accepted.
 
-
 **Bangalore
 
 Instakart Service private limited, Anjaneya storage and warehousing, #421/1 and 43 Kacherakanahalli village,
 jadigenahalli, Soukya Road Hosakote Taluk,
 Bangalore Rural - 560067
 
-
 **Hyderabad
 
 Flipkart India Pvt.Ltd, Sy no 696, Gundlapochampally Village, Medchal Mandal, ranga reddy Dist, Secunderabad-501401
-
 
 **Maharashtra
 
 Survey nos. 42/2, 42/3, 51/2, 51/3, 51/4, 51/5B (old survey no.51/5A+B), 51/5A+6B, 51/5B+6A, 51/6, 57/17, 57/18, in K-square Industrial Park, Before Padgha Toll Naka, Nashik – Mumbai Highway, After Pushkar Mela Hotel, Kurund village, Bhiwandi, Maharashtra – 421101
 
-
 **Kolkata
 
 INSTAKART SERVICES PRIVATE LIMITED, Stellar FC, L.R. KHATIAN NO.5820, J.L. NO.11,MOUZA-BELUMILKI, BLOCK- SERAMPORE UTTARPARA,P.S- SERAMPORE,GRAM PANCHAYAT, PEARAPUR, HOOGHLY (D)- 712223
-
 
 **Haryana
 
@@ -153,7 +144,7 @@ Customers can share their feedback by writing to support_socialcarnival@myntra.c
           id: 2,
           question:
             "What is Myntra Studio, and how can I shop through Myntra Studio ?",
-          answer: `Myntra Studio is an on-demand influencer-led content platform where you can view content (images/videos/polls/quizzes) posted by influencers and brands. You can also shop for select products featured on the Studio posts.
+          answer: `Myntra Studio is an on-demand influencer-led content platform where you can view content (users/videos/polls/quizzes) posted by influencers and brands. You can also shop for select products featured on the Studio posts.
 
 You can access Studio by clicking on “Studio” icon in the bottom navigation pane on the Myntra app. To shop for products featured on the post (or similar products), click on “Shop Products” on the bottom left of the post.
 
@@ -195,12 +186,9 @@ The ongoing live streams can be accessed at any point of time by going to Studio
           question: "Refund of Platform Fee",
           answer: `a) If the order is lost or undelivered to the preferred location, the complete order amount will be refunded if paid online, including the platform fee.
 
-
 b) If a customer cancels an order partially or returns an order, platform charges will not be refunded.
 
-
 c) Platform charges will be refunded in case of a full order cancellation
-
 
 d) For accounts whose return behavior does not adhere to our fair usage policy, platform fee will be non-refundable irrespective of order value*.
 
@@ -211,9 +199,7 @@ d) For accounts whose return behavior does not adhere to our fair usage policy, 
           question: "What is Myntra's Shipping Fee?",
           answer: `a) Shipping fee is charged towards providing delivery and post order services including but not limited to, higher than average returns
 
-
 b) Shipping is a value added service charge levied under one of the following circumstances:
-
 
 Orders below a certain value. The value can vary based on the category
 
@@ -223,7 +209,6 @@ b) The final shipping fee is calculated post application of any 'coupon benefit'
 
 c) The threshold values can change, please review the Shipping Fee at the time of checkout
 
-
 c) Shipping fee is not levied to Myntra Insiders, irrespective of the order value.`,
         },
         {
@@ -231,12 +216,9 @@ c) Shipping fee is not levied to Myntra Insiders, irrespective of the order valu
           question: "Refund of Shipping Fee",
           answer: `a) If the entire order is lost or undelivered to the preferred location, the complete order amount will be refunded if paid online, including the shipping fee.
 
-
 b) If an order is cancelled partially, shipping charges will not be refunded. In case of whole order cancellation, shipping charges will be refunded.
 
-
 c) In case item/ order is returned, shipping fee is not refunded
-
 
 d) For accounts whose return behavior does not adhere to our fair usage policy, shipping fee will be non-refundable irrespective of order value*.
 
@@ -251,7 +233,6 @@ d) For accounts whose return behavior does not adhere to our fair usage policy, 
           id: 6,
           question: "I am an Insider. Why am I seeing the shipping fee?",
           answer: `Shipping fee is a charge levied by Myntra, for the services rendered by Myntra on the platform . As an Insider, you continue to enjoy free shipping benefits without any minimum order value limits.
-
 
 However, a shipping fee is charged to all customers by Myntra for providing technical expertise, brand aggregation, and post sales support. The fees help mitigate various costs incurred by the platform and ensure smooth running and efficient customer service.`,
         },
@@ -286,36 +267,25 @@ However, a shipping fee is charged to all customers by Myntra for providing tech
             "I have received a partial item/partial order or an Untenanted/Void packet?",
           answer: `Kindly reach out to us for pilferage within 72 hours of delivery failing which the claim will not be entertained. Whilst we investigate, request you to please make note of the below pointers:
 
-
 Please do not use the item for which claim is being raised.
-
 
 You may be required to information’s like, short description of the case (A few questions will be asked to help us understand the scenario)
 
-
 The snapshots of the packet and other boxes (If any) (Try to cover the sides which look tampered/damaged as per the Users
-
 
 The refund for prepaid/Cash on delivery orders will be done after the investigation
 
-
 You may not be liable for a refund, if he/she falls in any of the scenarios stated below:
-
 
 Failure to provide adequate information about the case.
 
-
 Failure to provide snapshots of the packet and box(if any)
-
 
 If a pilferage delivery was received, pilferage claims must be made the same day.
 
-
 You must not dispose of the packaging for 3 - 4 days post - delivery. We might need to pick-up your packaging for investigation at our end.
 
-
 You have used the item for which claim was raised.
-
 
 In case of a component missing from a multi-component item such as Kurta, Bed - sheets, inner wear sets etc.only exchange return option would be provided basis serviceability and product type`,
         },
@@ -361,14 +331,12 @@ In case of a component missing from a multi-component item such as Kurta, Bed - 
             "What is Myntra's Return and Exchange Policy? How does it work?",
           answer: `Myntra's returns and exchange policy gives you an option to return or exchange items purchased on Myntra for any reason within the specified return/exchange period (check product details page for the same) Returns will be picked from the same address where the product is delivered. Feel free to try on a product but all we ask is that the product remains unused and is preserved in its original condition along with the tags and packaging. In case a Seal Tag is received with the item, ensure that it remains attached & intact with the product to avoid any hassles in the event of a return/exchange. There are two ways to return the product to us:
 
-
 Pick up: In most locations, we offer a free pick up service. You will see a pickup option when you submit a return request.
 Self-Ship: If we don't offer a pick up at your location. In such cases, we will credit the shipping costs in the form of Myntra credits provided the product meets the return policy and you have shared scan copy of the courier receipt with us.
 
 During Pick Up, our delivery agent may do a quality check on the return. For a successful pick up, we will initiate a doorstep refund for the return amount into the refund mode selected at the time of initiating the return request. This doorstep refund may not be applicable for some pin codes in which case refund will be initiated after the product has been received at our warehouse and has passed a quality check. If the picked up product does not pass the quality check, we shall ship it back to you. If you choose to exchange the item for reason of mismatch of size or receipt of a defective item, you will be provided with a replacement of the item, free of cost. However all exchanges are subject to stock availability and subject to your address being serviceable for an exchange. If you choose to exchange an item, our delivery representative will deliver the new item to you and simultaneously pick up the original item from you. Please note that we offer you an option to exchange items purchased by you on Myntra for same or different sizes of same style or for any other item of the same or different value from Myntra within the specified exchange period subject to your address being serviceable for an exchange.
 
 The following EXCEPTIONS and RULES apply to this Policy:
-
 
 Swarovski, Precious Jewelry, Rayban Sunglasses, Socks, Briefs, Shapewear Bottoms, any Lingerie Set that includes a Brief, Swimwear, Mittens, Wrist-Bands cannot be exchanged or returned.
 
@@ -382,18 +350,13 @@ Under Exchange Policy,
 
 Note: Exchange/Replacement will be delivered at the same address where the original product was delivered. In case you wish to receive an exchange to a new address, we recommend returning the item for a refund and placing a new order with the new address.
 
-
 a) If you choose to exchange the item purchased by you on Myntra within the specified exchange period for the same size or different size of same style, you will be provided with a replacement of the item, free of cost.
-
 
 b) If you choose to exchange item purchased by you on Myntra for any other item of the same or different value from Myntra. In such case, if exchanged item is of the higher value, differences in amount will be charged to you and if exchanged item is of the lower value, differences in amount will be refunded to you post successful pick up of original item from you.
 
-
 c) Net amount paid by you (excluding instant cashback/discount) to purchase original item will be considered to calculate difference in amount of original and exchanged item which will be payable by you or refundable by Myntra as the case may be, for an exchange.
 
-
 d) Applicable refund for exchange will be trigger post successful pick of original item from you.
-
 
 6) All exchanges are subject to stock availability and subject to your address being serviceable for an exchange.
 
@@ -416,7 +379,6 @@ d) Applicable refund for exchange will be trigger post successful pick of origin
           question: "To return a product to Myntra, please follow these steps:",
           answer: `You can return products purchased from Myntra within the specified return/exchange period(check product details page for the same), except for our non-returnable products and high-value products which can only be returned for limited number of days.
 
-
 Create a 'Return Request' under “My Orders” section of App/Website/M-site. Follow the screens that come up after tapping on the 'Return’ button. Please make a note of the Return ID that we generate at the end of the process. Keep the item ready for pick up or ship it to us basis on the return mode
 
 We offer pick-up facility in selected locations basis our courier serviceability.
@@ -425,9 +387,7 @@ If reverse pick-up option is not available at your location you can self-ship th
 
 Pick-up: If you select to schedule a pick-up, please place the product in a packet and the product must be unused, unwashed and all the tags are intact.Keep the packet ready and open to expedite the return pickup. Our staff may initially examine the product at the time of pickup and a further quality check of the product will be conducted at our Returns Desk.
 
-
 Self-ship: In case your area pincode is not eligible for “Pick-up” mode then, please self-ship the product to our Returns desk.Please pack the product and ensure product is unused, unwashed and all the tags are intact.Also, please mention Order No and Return id on a piece of paper and place it in the packet. Kindly address the package to the address of the Returns desk closest to you. We have listed out the addresses of the Returns desk in another section on this page.
-
 
 We will send you a confirmation email as soon as we receive the shipment at our warehouse. At any time, you can track the status of your return request on App/Website/Msite.
 
@@ -437,7 +397,6 @@ NOTE: NO PRODUCTS SHALL BE ACCEPTED IF THE WARRANTY CARD IS MISSING WHILE RETURN
           id: 3,
           question: "How do I place an exchange request on Myntra?",
           answer: `If you would like to exchange products purchased from Myntra, please follow below mentioned steps:
-
 
 You can create exchange for products purchased from Myntra within the specified return/exchange period (check product details page for the same) under “My Orders” section of App/Website/M-site. If your address is serviceable for exchange you will be able to proceed and generate an exchange id. Please note down your exchange id for future reference
 
@@ -474,14 +433,12 @@ At any time, you can track the status of your exchange requests under “My Orde
             "How long would it take me to receive the refund of the returned product?",
           answer: `After the refund has been initiated by Myntra as per the Returns Policy, the refund amount is expected to reflect in the customer account as per the following timelines:
 
-
 NEFT - 1 to 3 business days post refund initiation
 Myntra Credit - Instant
 Online Refund – 5 business days post refund initiation, depending on your bank partner
 PhonePe wallet –Instant
 
 Please note, Myntra initiates the refund upon successful return pick up, or after the returned item has reached us and quality check is successful. Therefore, the refund initiation time may vary by time taken by the courier partner to deliver the return to a Myntra warehouse. In case of any refund discrepancies, Myntra may at its sole discretion, request you to share with us a screenshot of your bank statement.
-
 
 Note : You can maintain up to five bank accounts for NEFT/IMPS refunds and a single bank account can be linked upto five Myntra accounts. If you wish to add a new bank account over and above, please delete an existing bank account.`,
         },
@@ -496,7 +453,6 @@ Note : You can maintain up to five bank accounts for NEFT/IMPS refunds and a sin
             "Does Myntra pick up the product I want to return from my location?",
           answer: `Currently, we pick up products only from selected PIN Codes. If your area pincode is serviceable, you will be able to select the pickup option when you create a Return Request on App/Website/M-site.
 
-
 We will pick up the return within 4 - 7 days from the request placement date.
 Please keep the return shipment ready.`,
         },
@@ -504,7 +460,6 @@ Please keep the return shipment ready.`,
           id: 11,
           question: "How can I Self-Ship the product to Myntra?",
           answer: `If your area pin code is not serviceable for pickup, you will need to self-ship the return item via any reliable courier partner. Please ensure to place a sheet of paper with the details of Order ID and Return ID for each item included in the package. For all self-shipped returns, you will be duly reimbursed the shipping costs. Therefore, please ensure that scan copy of courier bill/receipt is shared via Contact us option available on App/Website/M-site. The courier bill/receipt should satisfy the following conditions for successful processing:
-
 
 It should capture the weight of the return package.
 Residential/office address, destination address, shipment date, amount and other details should be mentioned.
@@ -518,7 +473,6 @@ This is subject to your returns being inspected and successfully processed upon 
           question: "Where should I self-ship the Returns?",
           answer: `You can send the return to any one of the following returns processing facilities listed below. Please ensure that you specify the name of the seller you purchased the products from (You can find the seller name on your order invoice) and dispatch the package to the address listed below. Kindly do not send it to any other address as the return package would not be treated as accepted.
 
-
 **Bangalore
 
 Survey Numbers 231, 232 and 233, Soukya Road, Samethanahalli Village,
@@ -526,21 +480,17 @@ Anugondanahalli Hobli,
 Hoskote Taluk,
 Bangalore-560067
 
-
 **Hyderabad
 
 Flipkart India Pvt.Ltd, Sy no 696, Gundlapochampally Village, Medchal Mandal, ranga reddy Dist, Secunderabad-501401
-
 
 **Maharashtra
 
 Survey nos. 42/2, 42/3, 51/2, 51/3, 51/4, 51/5B (old survey no.51/5A+B), 51/5A+6B, 51/5B+6A, 51/6, 57/17, 57/18, in K-square Industrial Park, Before Padgha Toll Naka, Nashik – Mumbai Highway, After Pushkar Mela Hotel, Kurund village, Bhiwandi, Maharashtra – 421101
 
-
 **Kolkata
 
 INSTAKART SERVICES PRIVATE LIMITED, Stellar FC, L.R. KHATIAN NO.5820, J.L. NO.11,MOUZA-BELUMILKI, BLOCK- SERAMPORE UTTARPARA,P.S- SERAMPORE,GRAM PANCHAYAT, PEARAPUR, HOOGHLY (D)- 712223
-
 
 **Haryana
 
@@ -663,7 +613,6 @@ Block C, Embassy Industrial Parks Private Limited, Village Pathredi, Tehsil -Man
           question: "How can I pay for my order at Myntra?",
           answer: `We support the following payment options at Myntra:
 
-
 Cash On Delivery (available in selected pin codes)
 Credit Card
 Debit Card
@@ -699,7 +648,6 @@ In case you are unable to arrange for an alternate currency, please consider res
           question: "Why can't I see the COD option on my payment page?",
           answer: `If you do not see a COD option on your payment page, this may be due to one of the following reasons:
 
-
 Your order value may be less than Rs. 299 or over Rs. 49,999.
 Our courier partners may not support the Cash on Delivery option for your delivery address.
 You may have placed another order using the COD option which is pending delivery. If the amount of this order when added to your current order exceeds Rs. 49,999, then the COD option will be disabled temporarily.For all Tanishq products COD limit is Rs. 15,000`,
@@ -724,7 +672,6 @@ You may have placed another order using the COD option which is pending delivery
           question: "I want to know about EMI (credit card) payment option?",
           answer: `EMI (Credit Card) is a convenient payment option that you can choose to pay for the order in easy installments to the credit card issuing bank. The option is available only on credit cards issued by the following banks:
 
-
 HDFC
 ICICI
 SBI
@@ -742,7 +689,6 @@ This EMI option is facilitated by the card issuing bank. The EMI eligibility, pa
           id: 10,
           question: "How do I make payment using EMI (Credit Card) option?",
           answer: `Add the desired products to your Myntra shopping bag, proceed to checkout, select delivery address and proceed to payment. On payment page, select EMI (Credit Card) under payment options and follow these simple steps:
-
 
 Select your Credit Card issuing bank you wish to pay from
 Select the repayment duration (3, 6, 9, 12, 18 or 24 months). The interest rate, monthly EMI and total interest paid will be displayed.
@@ -786,7 +732,6 @@ The order will be confirmed and shipped on successful payment.`,
           id: 17,
           question: "How is the GST amount decided?",
           answer: `Following rules will govern whether or not additional GST will be applicable on the products purchased by you:
-
 
 1) GST applicability:
 
@@ -1442,10 +1387,9 @@ The donation is being collected for the Flipkart Foundation. Myntra Designs Priv
               {isSection === section.id && (
                 <div className="">
                   {section.questions.map((q, index) => (
-                    <ul className="space-y-2">
+                    <ul className="space-y-2" key={index}>
                       <li
                         className="text-black mt-5 text-lg font-semibold"
-                        key={index}
                         onClick={() => toggleQuestion(q.id)}
                       >
                         {q.question}

@@ -23,7 +23,7 @@ export const WishSlice = createSlice({
     // Action to add an item to the wish list
     addToWish(state, action) {
       const existingItem = state.wishItems.find(
-        (item) => item.id === action.payload.id
+        (item) => item._id === action.payload._id
       );
 
       if (existingItem) {
@@ -37,14 +37,14 @@ export const WishSlice = createSlice({
     // Action to remove an item from the wish list
     removeFromWish(state, action) {
       state.wishItems = state.wishItems.filter(
-        (item) => item.id !== action.payload
+        (item) => item._id !== action.payload
       );
       localStorage.setItem("wishItems", JSON.stringify(state.wishItems));
     },
     // Action to update the quantity of an item in the wish list
     updateQuantity: (state, action) => {
-      const { id, quantity } = action.payload;
-      const item = state.wishItems.find((item) => item.id === id);
+      const { _id, quantity } = action.payload;
+      const item = state.wishItems.find((item) => item._id === _id);
       if (item) {
         item.quantity = quantity;
         localStorage.setItem("wishItems", JSON.stringify(state.wishItems));

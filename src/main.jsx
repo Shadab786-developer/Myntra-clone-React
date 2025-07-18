@@ -1,6 +1,5 @@
 // This file is the entry point for the React application.
 // It sets up the router, Redux store, and Auth0 provider.
-
 import { createRoot } from "react-dom/client";
 import {
   Route,
@@ -28,6 +27,10 @@ import { StrictMode } from "react";
 import { Auth0Provider } from "@auth0/auth0-react";
 import Help from "./component/Help/Help.jsx";
 import FAQ from "./component/FAQ's/FAQ.jsx";
+import Detail from "./component/Details/Detail.jsx";
+import Login from "./component/Login/Login.jsx";
+import Singin from "./component/Login/Singin.jsx";
+import Verify from "./component/Login/Verify.jsx";
 
 // Create the router with routes for different components
 const router = createBrowserRouter(
@@ -48,6 +51,10 @@ const router = createBrowserRouter(
       <Route path="/Bag" element={<Bag />} />
       <Route path="/Help" element={<Help />} />
       <Route path="/FAQ" element={<FAQ />} />
+      <Route path="/Login" element={<Login />} />
+      <Route path="/Singin" element={<Singin />} />
+      <Route path="/Verify" element={<Verify />} />
+      <Route path="/details/:id" element={<Detail />} />
     </Route>
   )
 );

@@ -13,10 +13,10 @@ function Women() {
     dots: true,
     infinite: true,
     slidesToShow: 6,
-    slidesToScroll: 3,
+    slidesToScroll: 6,
     autoplay: true,
-    speed: 2000,
-    autoplaySpeed: 2000,
+    speed: 400,
+    autoplaySpeed: 5000,
     cssEase: "linear",
     responsive: [
       {
@@ -43,7 +43,7 @@ function Women() {
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
-    speed: 2000,
+    speed: 500,
     autoplaySpeed: 2000,
     cssEase: "linear",
     responsive: [
@@ -112,8 +112,8 @@ function Women() {
   ];
   return (
     <>
-      <div className="flex justify-around flex-col mr-[20%]  ml-[20%] sm:ml-[5%] sm:mr-[5%]">
-        <div className=" flex justify-center  mt-[10%] max-w-full max-h-full">
+      <div className="flex justify-around flex-col ">
+        <div className=" flex justify-center  mt-[35%] sm:mt-[10%] max-w-full max-h-full">
           <img src="https://assets.myntassets.com/f_webp,w_980,c_limit,fl_progressive,dpr_2.0/assets/images/2025/JANUARY/18/9B2TYAc1_1e7474ea4f194ee4aaefdf8a11245b2e.jpg" />
         </div>
 
@@ -131,7 +131,7 @@ function Women() {
           </Slider>
         </div>
 
-        <div className="text-gray-900 text-[35px] mt-12 mb-2 ml-8 max-h-10 font-semibold  gap-3">
+        <div className="text-gray-700 text-[15px] sm:text-[35px] sm:m-16 text-left text-nowrap max-h-10 font-bold  gap-3">
           {" "}
           BIGGEST BEALS ON TOP BRANDS
         </div>
@@ -139,7 +139,7 @@ function Women() {
           <Slider {...settings}>
             {productImgWomen.map((product, index) => (
               <div
-                className="grid grid-cols-4 gap-4 sm:grid-cols-4 sm:gap-2"
+                className="grid gap-4 grid-cols-4 sm:grid-cols-6 sm:gap-2 "
                 key={index}
               >
                 <Link to={"/Womenproduct"} key={index}>
@@ -149,7 +149,7 @@ function Women() {
             ))}
           </Slider>
         </div>
-        <div className="text-gray-900 text-[35px] mt-12 mb-2 ml-8 max-h-10 font-semibold">
+        <div className="text-gray-700 text-[15px] sm:text-[35px] sm:m-16 text-left text-nowrap max-h-10 font-bold  gap-3">
           CATEGORIES TO BAG{" "}
         </div>
         <div className="grid grid-cols-6  sm:items-stretch">
@@ -202,7 +202,7 @@ function Women() {
             </a>
           </Link>
         </div>
-        <div className="text-gray-900 text-[35px] mt-12 mb-2 ml-8 max-h-10 font-semibold">
+        <div className="text-gray-700 text-[15px] sm:text-[35px] sm:m-16 text-left text-nowrap max-h-10 font-bold  gap-3">
           EXPLORE TOP BRANDS{" "}
         </div>
         <div className="grid grid-cols-5  sm:items-stretch">
@@ -247,7 +247,7 @@ function Women() {
             </a>
           </Link>
         </div>
-        <div className="text-gray-900 text-[35px] mt-12 mb-2 ml-8 max-h-10 font-semibold">
+        <div className="text-gray-700 text-[15px] sm:text-[35px] sm:m-16 text-left text-nowrap max-h-10 font-bold  gap-3">
           TRENDING IN WESTERN WEAR{" "}
         </div>
         <div className="grid grid-cols-5 sm:items-stretch">
@@ -292,7 +292,7 @@ function Women() {
             </a>
           </Link>
         </div>
-        <div className="text-gray-900 text-[35px] mt-12 mb-2 ml-8 max-h-10 font-semibold">
+        <div className="text-gray-700 text-[15px] sm:text-[35px] sm:m-16 text-left text-nowrap max-h-10 font-bold  gap-3">
           TRENDING IN INDIAN WEAR{" "}
         </div>
         <div className="grid grid-cols-5  sm:items-stretch">
@@ -337,7 +337,7 @@ function Women() {
             </a>
           </Link>
         </div>
-        <div className="text-gray-900 text-[35px] mt-12 mb-2 ml-8 max-h-10 font-semibold">
+        <div className="text-gray-700 text-[15px] sm:text-[35px] sm:m-16 text-left text-nowrap max-h-10 font-bold  gap-3">
           TRENDING IN SPORTS WEAR{" "}
         </div>
         <div className="grid grid-cols-5 sm:items-stretch">
@@ -382,7 +382,7 @@ function Women() {
             </a>
           </Link>
         </div>
-        <div className="text-gray-900 text-[35px] mt-12 mb-2 ml-8 max-h-10 font-semibold">
+        <div className="text-gray-700 text-[15px] sm:text-[35px] sm:m-16 text-left text-nowrap max-h-10 font-bold  gap-3">
           TRENDING IN FOOTWEAR{" "}
         </div>
         <div className="grid grid-cols-5 sm:items-stretch">
@@ -427,7 +427,7 @@ function Women() {
             </a>
           </Link>
         </div>
-        <div className="text-gray-900 text-[35px] mt-12 mb-2 ml-8 max-h-10 font-semibold">
+        <div className="text-gray-700 text-[15px] sm:text-[35px] sm:m-16 text-left text-nowrap max-h-10 font-bold  gap-3">
           TRENDING IN ACCESSORIES{" "}
         </div>
         <div className="grid grid-cols-5 sm:items-stretch">

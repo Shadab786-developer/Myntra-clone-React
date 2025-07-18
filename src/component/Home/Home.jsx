@@ -13,17 +13,17 @@ export default function Home() {
     dots: true,
     infinite: true,
     slidesToShow: 6,
-    slidesToScroll: 3,
+    slidesToScroll: 6,
     autoplay: true,
-    speed: 2000,
-    autoplaySpeed: 2000,
+    speed: 400,
+    autoplaySpeed: 5000,
     cssEase: "linear",
     responsive: [
       {
         breakpoint: 1024,
         settings: {
           slidesToShow: 6,
-          slidesToScroll: 3,
+          slidesToScroll: 6,
         },
       },
       {
@@ -43,8 +43,8 @@ export default function Home() {
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
-    speed: 2000,
-    autoplaySpeed: 2000,
+    speed: 700,
+    autoplaySpeed: 3000,
     cssEase: "linear",
     responsive: [
       {
@@ -69,6 +69,11 @@ export default function Home() {
     {
       item_image:
         "https://assets.myntassets.com/f_webp,w_245,c_limit,fl_progressive,dpr_2.0/assets/images/2024/DECEMBER/14/jm3rOZrT_5047ca596a8b4b61b41cb837ca2a3b83.png",
+      item_path: "/Womenproduct",
+    },
+    {
+      item_image:
+        "https://assets.myntassets.com/f_webp,w_196,c_limit,fl_progressive,dpr_2.0/assets/images/2025/4/3/b3b8e1d5-0b7f-4ac2-988a-e1a2a4b71ef51743664985845-image_png747386139.png",
       item_path: "/Womenproduct",
     },
     {
@@ -143,6 +148,11 @@ export default function Home() {
     },
     {
       item_image:
+        "https://assets.myntassets.com/f_webp,w_163,c_limit,fl_progressive,dpr_2.0/assets/images/2023/8/3/eb385972-caf6-4e84-a37c-3fc2b4ac52041691079093062-image_png892897249.png",
+      item_path: "/Men",
+    },
+    {
+      item_image:
         "https://assets.myntassets.com/f_webp,w_163,c_limit,fl_progressive,dpr_2.0/assets/images/2023/7/31/7aac1f32-1a1a-4ba6-924b-ee1c28553aed1690773011304-Nautica.png",
       item_path: "/Men",
     },
@@ -194,8 +204,8 @@ export default function Home() {
   ];
   return (
     <>
-      <div className="flex justify-around items-center flex-col mr-[20%]  ml-[20%] sm:ml-[5%] sm:mr-[5%]">
-        <main className="box-border h-full w-full">
+      <div className="flex justify-around items-center flex-col ">
+        <main className="box-border h-full w-full mt-[35%] sm:mt-0">
           <div className="h-full w-full mt-[10%] flex justify-center items-center">
             <img
               src="https://assets.myntassets.com/f_webp,w_980,c_limit,fl_progressive,dpr_2.0/assets/images/2025/JANUARY/18/9B2TYAc1_1e7474ea4f194ee4aaefdf8a11245b2e.jpg"
@@ -211,31 +221,9 @@ export default function Home() {
                 </div>
               ))}
             </Slider>
-            <div className="flex justify-center items-center h-full w-full">
-              <img
-                src="https://assets.myntassets.com/f_webp,w_245,c_limit,fl_progressive,dpr_2.0/assets/images/2025/JANUARY/20/QaUCohXw_8c4656316b884d3fb933e51bd58a46b7.jpg"
-                alt=" Baroda Bank Offer"
-                className="h-1/4 w-1/4"
-              />
-              <img
-                src="https://assets.myntassets.com/f_webp,w_245,c_limit,fl_progressive,dpr_2.0/assets/images/2025/JANUARY/20/JKhvCz1x_81dfb81ece3d4ac195134e1f8aa00462.jpg"
-                alt="bank offer"
-                className="h-1/4 w-1/4"
-              />
-              <img
-                src="https://assets.myntassets.com/f_webp,w_245,c_limit,fl_progressive,dpr_2.0/assets/images/2025/JANUARY/21/u8Vbh5I3_990663c0e38a48d79701a09f59f7af32.jpg"
-                alt="HDFC Bank Offer"
-                className="h-1/4 w-1/4"
-              />
-              <img
-                src="https://assets.myntassets.com/f_webp,w_245,c_limit,fl_progressive,dpr_2.0/assets/images/2025/JANUARY/20/2CJax5VE_eb4523de23254a529023419b40a5c852.jpg"
-                alt="Easy-Pay Returns"
-                className="h-1/4 w-1/4"
-              />
-            </div>
           </div>
 
-          <div className="text-gray-700 text-[15px] sm:text-[25px] mt-12 mb-2 ml-8 text-nowrap max-h-10 font-extrabold  gap-3">
+          <div className="text-gray-700 text-[15px] sm:text-[35px] sm:m-16 text-left text-nowrap max-h-10 font-bold  gap-3">
             {" "}
             MEDAL WORTHY BRANDS TO BAG
           </div>
@@ -251,7 +239,7 @@ export default function Home() {
               </div>
             ))}
           </Slider>
-          <div className="text-gray-700 text-[15px] sm:text-[25px] mt-12 mb-2 ml-8 text-nowrap max-h-10 font-extrabold  gap-3">
+          <div className="text-gray-700 text-[15px] sm:text-[35px] sm:m-16 text-left text-nowrap max-h-10 font-bold  gap-3">
             {" "}
             Grand Global Brands
           </div>
@@ -267,7 +255,7 @@ export default function Home() {
               </div>
             ))}
           </Slider>
-          <div className="text-gray-700 text-[15px] text-nowrap sm:text-[25px] mt-12 mb-2 ml-8 max-h-10 font-extrabold">
+          <div className="text-gray-700 text-[15px] sm:text-[35px] sm:m-16 text-left text-nowrap max-h-10 font-bold  gap-3">
             SHOP BY CATEGORY{" "}
           </div>
           <div className="grid grid-cols-6 sm:grid-cols-8 sm:items-stretch">

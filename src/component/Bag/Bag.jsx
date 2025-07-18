@@ -70,10 +70,10 @@ function Bag() {
           {/* Render each item in the bag */}
           {bagItems.map((item, index) => (
             <div
-              className="inline-block w-2/3 px-5 border-r border-[#eaeaec] mt-[10%] pt-8 text-[#282c3f] text-[32px] "
+              className="inline-block w-2/3 px-5 border-r border-[#eaeaec] mt-[10%] pt-8 text-[#282c3f] text-[32px] shadow-lg"
               key={index}
             >
-              <div className="mb-2 bg-white text-[14px] border border-[#eaeaec] rounded-sm relative p-[12px 12px 0]">
+              <div className="mb-2 bg-white text-[14px] border border-[#eaeaec] rounded-sm relative p-[12px 12px 10px 10px]">
                 <div className="absolute bg-white h-36 w-28">
                   <img
                     className="w-full"
@@ -110,7 +110,7 @@ function Bag() {
                 <div
                   className="absolute text-[25px] top-3 right-5 w-4 h-4 cursor-pointer"
                   onClick={() => {
-                    dispatch(removeFromBag(item.id));
+                    dispatch(removeFromBag(item._id));
                     console.log(bagItems);
                   }}
                 >
@@ -121,7 +121,7 @@ function Bag() {
           ))}
         </div>
         {bagItems.length > 0 ? (
-          <div className="ml-[70%] w-1/3 p-[24px 0 0 16px] text-[#282c3f] text-[13px]  ">
+          <div className="ml-[70%] w-1/3 p-3 rounded-lg text-[#282c3f] text-[13px] bg-white  ">
             {
               <>
                 <div className=" mb-4">

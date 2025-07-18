@@ -14,7 +14,7 @@ function WishList() {
   // State variable for wishlist items
   const wishItems = useSelector((state) => state.wish.wishItems);
   const dispatch = useDispatch();
-  const { loginWithRedirect, isAuthenticated } = useAuth0();
+  const isAuthenticated = localStorage.getItem("isVerified");
 
   // Update quantity of wishlist items on component mount
   useEffect(() => {
@@ -25,12 +25,12 @@ function WishList() {
 
   return (
     <div>
-      <main className=" bg-blue-100">
+      <main className=" bg-pink-50">
         {isAuthenticated ? (
           <div className=" w-3/4 ml-[12.5%]">
             {wishItems.map((item, index) => (
               <div
-                className="mt-[10%] inline-block w-2/3 px-5 border-r border-[#eaeaec] pt-8 text-[#282c3f] text-[32px] "
+                className="mt-[10%] inline-block w-2/3 px-5 border-r border-[#eaeaec] pt-8 text-[#282c3f] text-[32px] shadow-lg "
                 key={index}
               >
                 <div className="mb-2 bg-white text-[14px] border border-[#eaeaec] rounded-sm relative p-[12px 12px 0]">
@@ -73,14 +73,14 @@ function WishList() {
                   <div
                     className="absolute text-[25px] top-3 right-5 w-4 h-4 cursor-pointer"
                     onClick={() => {
-                      dispatch(removeFromWish(item.id));
+                      dispatch(removeFromWish(item._id));
                       console.log(wishItems);
                     }}
                   >
                     X
                   </div>
                   <button
-                    className="bg-[#f49999] py-1 px-4 rounded-lg w-full mr-1 text-[18px] mt-2 cursor-pointer"
+                    className="bg-[#f49999] py-1 px-4 shadow-lg w-full mr-1 text-[18px] mt-2 cursor-pointer"
                     onClick={() => {
                       dispatch(addToBag(item));
                       dispatch(removeFromWish(item));
