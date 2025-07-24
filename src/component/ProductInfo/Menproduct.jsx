@@ -2,10 +2,8 @@
 // It contains state variables for managing the display of items and functions for rendering components.
 
 import React, { useEffect, useState } from "react";
-
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
 import { addToWish } from "../../Features/WishItems/WishSlice";
 
 const PAGE_LIMIT = 5;
@@ -48,7 +46,7 @@ function Menproduct() {
   };
   async function filterByCategory() {
     const resp = await fetch(
-      `http://localhost:7000/api/v1/filter/filterByCategory?page=${currentPage}&limit=${PAGE_LIMIT}`,
+      `https://myntra-backend-8j4c.onrender.com/api/v1/filter/filterByCategory?page=${currentPage}&limit=${PAGE_LIMIT}`,
       {
         method: "POST",
         headers: {
@@ -171,6 +169,87 @@ function Menproduct() {
     setLoading(false);
   };
 
+  const handlePageChange = (pageNumber) => {
+    if (pageNumber >= 1 && pageNumber <= totalProductsPages) {
+      setCurrentPage(pageNumber);
+    }
+  };
+
+  // Function to render the page buttons (Myntra-like)
+  const renderPageButtons = () => {
+    const pageNumbers = [];
+    const maxPagesToShow = 5; // Adjust this number based on your design preference
+    let startPage, endPage;
+
+    if (totalProductsPages <= maxPagesToShow) {
+      // Show all pages if total pages are less than or equal to maxPagesToShow
+      startPage = 1;
+      endPage = totalProductsPages;
+    } else {
+      // Calculate start and end pages for pagination ellipsis
+      if (currentPage <= Math.ceil(maxPagesToShow / 2)) {
+        startPage = 1;
+        endPage = maxPagesToShow;
+      } else if (
+        currentPage + Math.floor(maxPagesToShow / 2) >=
+        totalProductsPages
+      ) {
+        startPage = totalProductsPages - maxPagesToShow + 1;
+        endPage = totalProductsPages;
+      } else {
+        startPage = currentPage - Math.floor(maxPagesToShow / 2);
+        endPage = currentPage + Math.floor(maxPagesToShow / 2);
+      }
+    }
+
+    // Add first page if it's not in the range
+    if (startPage > 1) {
+      pageNumbers.push(1);
+      if (startPage > 2) {
+        pageNumbers.push("..."); // Ellipsis
+      }
+    }
+
+    // Add pages within the calculated range
+    for (let i = startPage; i <= endPage; i++) {
+      pageNumbers.push(i);
+    }
+
+    // Add last page if it's not in the range
+    if (endPage < totalProductsPages) {
+      if (endPage < totalProductsPages - 1) {
+        pageNumbers.push("..."); // Ellipsis
+      }
+      pageNumbers.push(totalProductsPages);
+    }
+    return (
+      <div className="flex justify-center items-center gap-2">
+        {pageNumbers.map((pageNumber, index) =>
+          pageNumber === "..." ? (
+            <span key={index} className="px-3 py-1.5 text-black text-[18px]">
+              ...
+            </span>
+          ) : (
+            <button
+              key={pageNumber}
+              onClick={() => handlePageChange(pageNumber)}
+              className={`
+                px-6 py-3 rounded-lg font-medium transition-all duration-300
+                ${
+                  currentPage === pageNumber
+                    ? "bg-white text-black shadow-lg" // Active state for Myntra-like
+                    : "bg-gray-100 text-gray-700 hover:bg-gray-200" // Inactive state
+                }
+                focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-opacity-50
+              `}
+            >
+              {pageNumber}
+            </button>
+          )
+        )}
+      </div>
+    );
+  };
   const handlePrevPage = () => {
     if (currentPage > 1) setCurrentPage(currentPage - 1);
   };
@@ -821,41 +900,72 @@ function Menproduct() {
 
               <div className="w-full flex flex-col items-center max-h-28">
                 {renderComponent()}
+                {/* Pagination Controls */}
                 {totalProductsPages > 0 && (
-                  <div className="flex justify-center items-center gap-6 py-6">
+                  <div className="flex flex-wrap justify-center items-center gap-4 py-6">
+                    {/* Previous Button */}
                     <button
                       onClick={handlePrevPage}
                       disabled={currentPage === 1}
-                      className={`px-4 py-2 rounded-lg font-medium transition-colors duration-300 ${
-                        currentPage === 1
-                          ? "bg-gray-300 text-gray-600 cursor-not-allowed"
-                          : "bg-blue-500 text-white hover:bg-blue-600"
-                      }`}
+                      className={`
+              px-8 py-3 rounded-md font-medium transition-all duration-300
+              flex items-center gap-1 text-[18px]
+              ${
+                currentPage === 1
+                  ? "bg-gray-200 text-gray-500 cursor-not-allowed"
+                  : "bg-white text-black shadow-2xl"
+              }
+              focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-opacity-50
+            `}
                     >
-                      ← Prev
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-8 w-8"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth={2}
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M15 19l-7-7 7-7"
+                        />
+                      </svg>
                     </button>
 
-                    <span className="text-sm md:text-base font-semibold text-gray-700">
-                      Page <span className="text-blue-600">{currentPage}</span>{" "}
-                      of{" "}
-                      <span className="text-blue-600">
-                        {totalProductsPages}
-                      </span>
-                      <span className="ml-4 text-gray-600">
-                        Total: <strong>{totalProducts}</strong> Items
-                      </span>
-                    </span>
+                    {/* Page Number Buttons */}
+                    {renderPageButtons()}
 
+                    {/* Next Button */}
                     <button
                       onClick={handleNextPage}
                       disabled={currentPage === totalProductsPages}
-                      className={`px-4 py-2 rounded-lg font-medium transition-colors duration-300 ${
-                        currentPage === totalProductsPages
-                          ? "bg-gray-300 text-gray-600 cursor-not-allowed"
-                          : "bg-blue-500 text-white hover:bg-blue-600"
-                      }`}
+                      className={`
+              px-8 py-3 rounded-lg font-lg transition-all duration-300
+              flex items-center gap-1
+              ${
+                currentPage === totalProductsPages
+                  ? "bg-gray-200 text-gray-500 cursor-not-allowed"
+                  : "bg-white text-black shadow-2xl"
+              }
+              focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-opacity-50
+            `}
                     >
-                      Next →
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-8 w-8"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth={2}
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M9 5l7 7-7 7"
+                        />
+                      </svg>
                     </button>
                   </div>
                 )}

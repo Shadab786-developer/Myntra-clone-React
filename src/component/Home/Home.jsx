@@ -205,7 +205,7 @@ export default function Home() {
   return (
     <>
       <div className="flex justify-around items-center flex-col ">
-        <main className="box-border h-full w-full mt-[35%] sm:mt-0">
+        <main className="box-border h-full max-w-full mt-[35%] sm:mt-0">
           <div className="h-full w-full mt-[10%] flex justify-center items-center">
             <img
               src="https://assets.myntassets.com/f_webp,w_980,c_limit,fl_progressive,dpr_2.0/assets/images/2025/JANUARY/18/9B2TYAc1_1e7474ea4f194ee4aaefdf8a11245b2e.jpg"

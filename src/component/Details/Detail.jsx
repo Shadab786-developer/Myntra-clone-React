@@ -21,7 +21,9 @@ const Detail = () => {
   useEffect(() => {
     if (!product) {
       axios
-        .get(`http://localhost:7000/api/v1/products/getProduct/${id}`)
+        .get(
+          `https://myntra-backend-8j4c.onrender.com/api/v1/products/getProduct/${id}`
+        )
         .then((response) => {
           setProduct(response.data);
           console.log(response.data);

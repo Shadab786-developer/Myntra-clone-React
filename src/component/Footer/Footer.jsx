@@ -8,7 +8,7 @@ export default function Footer() {
   return (
     <>
       <footer className="font-sans">
-        <div className="flex flex-wrap justify-evenly pt-8 pb-10 bg-slate-50">
+        <div className="flex flex-wrap justify-evenly items-start pt-8 pb-10 bg-slate-50">
           <div className="flex flex-col ml-[5%]">
             <h3 className="text-gray-900 font-bold text-[14px] mb-6">
               ONLINE SHOPPING
@@ -211,61 +211,61 @@ export default function Footer() {
               </p>
             </div>
           </div>
+          <div className="flex flex-col ml-[5%]  ">
+            <h3 className="text-gray-900 font-bold text-[14px] mb-6">
+              USEFUL LINKS
+            </h3>
+            <a
+              href="#"
+              className="text-gray-400 text-[15px] decoration-white pb-1"
+            >
+              Blog
+            </a>
+            <a
+              href="#"
+              className="text-gray-400 text-[15px] decoration-white pb-1"
+            >
+              Careers
+            </a>
+            <a
+              href="#"
+              className="text-gray-400 text-[15px] decoration-white pb-1"
+            >
+              Site Map
+            </a>
+            <a
+              href="#"
+              className="text-gray-400 text-[15px] decoration-white pb-1"
+            >
+              Corporate Information
+            </a>
+            <a
+              href="#"
+              className="text-gray-400 text-[15px] decoration-white pb-1"
+            >
+              Whitehat
+            </a>
+            <a
+              href="#"
+              className="text-gray-400 text-[15px] decoration-white pb-1"
+            >
+              Cleartrip
+            </a>
+            <a
+              href="#"
+              className="text-gray-400 text-[15px] decoration-white pb-1"
+            >
+              Gift Card
+            </a>
+            <a
+              href="#"
+              className="text-gray-400 text-[15px] decoration-white pb-1"
+            >
+              Myntra Insider
+            </a>
+          </div>
         </div>
 
-        <div className="flex flex-col ml-[8%]">
-          <h3 className="text-gray-900 font-bold text-[14px] mb-6">
-            USEFUL LINKS
-          </h3>
-          <a
-            href="#"
-            className="text-gray-400 text-[15px] decoration-white pb-1"
-          >
-            Blog
-          </a>
-          <a
-            href="#"
-            className="text-gray-400 text-[15px] decoration-white pb-1"
-          >
-            Careers
-          </a>
-          <a
-            href="#"
-            className="text-gray-400 text-[15px] decoration-white pb-1"
-          >
-            Site Map
-          </a>
-          <a
-            href="#"
-            className="text-gray-400 text-[15px] decoration-white pb-1"
-          >
-            Corporate Information
-          </a>
-          <a
-            href="#"
-            className="text-gray-400 text-[15px] decoration-white pb-1"
-          >
-            Whitehat
-          </a>
-          <a
-            href="#"
-            className="text-gray-400 text-[15px] decoration-white pb-1"
-          >
-            Cleartrip
-          </a>
-          <a
-            href="#"
-            className="text-gray-400 text-[15px] decoration-white pb-1"
-          >
-            Gift Card
-          </a>
-          <a
-            href="#"
-            className="text-gray-400 text-[15px] decoration-white pb-1"
-          >
-            Myntra Insider
-          </a>
-        </div>
         <div className="mt-[5%] ml-[4%]">
           <h3 className="text-gray-900 font-bold text-[14px] mb-6">
             POPULAR SEARCHES

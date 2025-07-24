@@ -34,8 +34,7 @@ export default function Header() {
     try {
       const response = await axios.post(
         `https://myntra-backend-8j4c.onrender.com/api/v1/userAuth/logout`,
-        email,
-        password,
+        { email, password },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -44,7 +43,7 @@ export default function Header() {
       );
       console.log("User Successfull logout", response.data);
 
-      localStorage.setItem("email", response.data.data.user.isVerified);
+      localStorage.setItem("isVerified", false);
     } catch (err) {
       console.error("Error to Logout In user:", err.message);
     }
@@ -54,7 +53,7 @@ export default function Header() {
   const fetchProducts = async () => {
     try {
       const res = await fetch(
-        `https://myntra-backend-8j4c.onrender.com/api/v1/products/getProducts`
+        `https://myntra-backend-8j4c.onrender.com/api/v1/products/getProductsWithOutPageLimit`
       );
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const json = await res.json();
@@ -64,7 +63,7 @@ export default function Header() {
     } catch (err) {
       setError(err.message);
     } finally {
-      setLoading(false);
+      console.log("Finally fetch the data ");
     }
   };
   useEffect(() => {
@@ -1794,7 +1793,7 @@ export default function Header() {
                           To access account and manage orders
                         </h4>
                       )}
-                      {isAuthenticated ? (
+                      {isAuthenticated === "true" ? (
                         <button
                           className="border border-gray-200 text-pink-600 font-bold text-[20px] rounded-sm py-3 px-4 mr-10 mt-3 mb-3 hover:border-pink-600"
                           onClick={() => handleLogout()}

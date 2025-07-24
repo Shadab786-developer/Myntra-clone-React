@@ -130,6 +130,7 @@ const Verify = () => {
       );
 
       console.log("Verification Success:", response.data);
+      localStorage.setItem("isVerified", true); // Store verification status
 
       navigate("/");
     } catch (err) {
